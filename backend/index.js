@@ -1,3 +1,26 @@
 const express = require('express');  //module
 const app = express();  //instance
-const PORT = 5000;
+
+
+app.use(express.json());
+const PORT = process.env.PORT || 5000;
+
+//test
+app.get('/', (req, res) => {
+    res.send('Backend test route');
+});
+
+app.post('/api/command', (req, res) => {
+    const { command } = req.body;
+    console.log(`Received command: ${command}`);
+    res.json({ message: `Command '${command}' received!` });
+});
+
+//err
+app.listen(PORT, (error) => {
+    if (!error) {
+        console.log(`Server is Successfully Running on port ${PORT}`);
+    } else {
+        console.error("Error occurred, server can't start:", error);
+    }
+});
