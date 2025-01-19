@@ -19,8 +19,8 @@ app.post('/api/command', (req, res) => {
 //err
 app.listen(PORT, (error) => {
     if (!error) {
-        console.log(`Server is Successfully Running on port ${PORT}`);
+        console.log(`Server is a Success. Running on port ${PORT}`);
     } else {
-        console.error("Error occurred, server can't start:", error);
+        console.error("Error, Server can't start:", error);
     }
 });
