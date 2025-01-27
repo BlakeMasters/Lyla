@@ -1,23 +1,11 @@
 {
-  "name": "lyla",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BlakeMasters/Lyla.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/BlakeMasters/Lyla/issues"
-  },
-  "homepage": "https://github.com/BlakeMasters/Lyla#readme",
-  "description": "",
   "dependencies": {
-    "express": "^4.21.2"
+    "concurrently": "^9.1.2",
+    "dotenv": "^16.4.7"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && node index.js",
+    "client": "cd client && npm run dev"
   }
 }
