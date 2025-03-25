@@ -3,28 +3,9 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
+const { authMiddleware, invalidateToken } = require('../middleware/authMiddleware')
 
-const invalidatedTokens = new Set();
-
-if (!process.env.JWT_SECRET) {
-    throw new Error('No .env file definition for JWT');
-  }
-
-  const authMiddleware = (req, res, next) => {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-    if (!token || invalidatedTokens.has(token)) {
-      return res.status(401).json({ message: 'Access denied. Invalid token.' });
-    }
-  
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.userId = decoded.userId;
-      next();
-    } catch (err) {
-      res.status(400).json({ message: 'Invalid token.' });
-    }
-  };
-
+//Register
 router.post('/register', async (req, res) => {
   try {
     const { username, password } = req.body
@@ -94,6 +75,7 @@ router.get('/profile', authMiddleware, async (req, res) => {
     }
   });
 
+//Logout
 router.post('/logout', authMiddleware, (req, res) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
     invalidatedTokens.add(token); //blacklist
